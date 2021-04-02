@@ -7,13 +7,14 @@
             <h6 class="q-ma-none q-pa-none">Form Tambah Mata Pelajaran</h6>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="save">
+            <q-form ref="form" @submit="save">
               <q-input label="Nama" v-model="nama" filled class="q-mb-md" :rules="rules.nama" />
               <q-input label="Jam Per Minggu"
                 type="number"
                 v-model.number="jam_per_minggu" 
                 filled 
-                min=1
+                min=2
+                max=6
                 class="q-mb-md" 
                 :rules="rules.jam_per_minggu"
               />
@@ -45,7 +46,8 @@ export default {
         (n => !!n || 'Nama harus diisi')
       ],
       jam_per_minggu: [
-        (n => !!n || 'Jam Per Minggu harus diisi')
+        (n => !!n || 'Jam Per Minggu harus diisi'),
+        (n => (n >= 2 || n <= 6) || 'Jam tidak valid')
       ]
     }
   }),
@@ -56,6 +58,11 @@ export default {
   },
   methods: {
   	async save () {
+      const form_valid = this.$refs.form.validate()
+      if (!form_valid) {
+        alert('data tidak valid')
+        return
+      }
       const params = { id_app_user: this.user.id }
       const payload = {
         nama: this.nama,

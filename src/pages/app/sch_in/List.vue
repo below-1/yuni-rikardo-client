@@ -16,10 +16,10 @@
         <q-card-section>
           <q-input class="q-mb-md" type="number" min="2" v-model.number="scheduleParams.n_particles" 
             label="Jumlah Particle" />
-          <q-input class="q-mb-md" type="number" min="0" :step="0.01" v-model.number="scheduleParams.w" label="W" />
+          <!-- <q-input class="q-mb-md" type="number" min="0" :step="0.01" v-model.number="scheduleParams.w" label="W" />
           <q-input class="q-mb-md" type="number" min="0" :step="0.01"  v-model.number="scheduleParams.c1" label="C1" />
           <q-input class="q-mb-md" type="number" min="0" :step="0.01" v-model.number="scheduleParams.c2" label="C2" />
-          <q-input class="q-mb-md" type="number" min="0" v-model.number="scheduleParams.threshold" label="Threshold" />
+          <q-input class="q-mb-md" type="number" min="0" v-model.number="scheduleParams.threshold" label="Threshold" /> -->
         </q-card-section>
         <q-card-section>
           <q-btn @click="createTask" dark color="blue" icon="play_circle" label="jalankan"></q-btn>

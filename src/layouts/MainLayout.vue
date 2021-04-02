@@ -18,20 +18,13 @@
           depressed
         >
           <div class="row no-wrap q-pa-md">
-            <div class="column">
-              <div class="text-h6 q-mb-md">Settings</div>
-              <q-toggle label="Use Mobile Data" />
-              <q-toggle label="Bluetooth" />
-            </div>
-
-            <q-separator vertical inset class="q-mx-lg" />
 
             <div class="column items-center">
               <q-avatar size="72px">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
 
-              <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
+              <div class="text-subtitle1 q-mt-md q-mb-xs">{{ user.username }}</div>
 
               <q-btn
                 color="primary"
@@ -39,6 +32,7 @@
                 push
                 size="sm"
                 v-close-popup
+                @click="logout"
               />
             </div>
           </div>
@@ -107,6 +101,7 @@
 <script>
 import { mapState } from 'vuex'
 import EssentialLink from 'components/EssentialLink.vue'
+import { prefix } from 'src/commons'
 
 const linksData = [
   {
@@ -148,6 +143,12 @@ export default {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksData
+    }
+  },
+  methods: {
+    logout () {
+      localStorage.removeItem(prefix('user'))
+      this.$router.replace('/')
     }
   },
   computed: {

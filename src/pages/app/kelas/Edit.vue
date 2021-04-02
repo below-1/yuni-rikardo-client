@@ -7,8 +7,21 @@
             <h6 class="q-ma-none q-pa-none">Form Edit Data Kelas</h6>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="save">
-              <q-input label="Nama Guru" v-model="item.nama" filled class="q-mb-md" :rules="rules.nama" />
+            <q-form ref="form" @submit="save">
+              <div class="row q-mb-md">
+                <div class="bg-grey-4 q-px-sm flex items-center col-2">
+                  VII
+                </div>
+                <q-select
+                  v-model="item.nama"
+                  :options="options_kelas"
+                  filled
+                  dense
+                  :rules="rules.nama"
+                  style="padding-bottom: 0px;"
+                  class="col-10"
+                />
+              </div>
               <div>
                 <q-btn label="simpan" type="submit" color="blue" depressed class="q-mr-md"></q-btn>
                 <q-btn label="reset" type="reset" depressed></q-btn>
@@ -28,6 +41,7 @@ export default {
   name: 'EditKelas',
   props: ['id'],
   data: () => ({
+    n_kelas: 13,
     item: {
       nama: ''
     },
@@ -38,6 +52,15 @@ export default {
       ]
     }
   }),
+  computed: {
+    options_kelas () {
+      let xs = []
+      for (let i = 0; i < this.n_kelas; i++) {
+        xs.push(65 + i);
+      }
+      return xs.map(x => String.fromCharCode(x))
+    }
+  },
   methods: {
     async loadItem () {
       const url = `/kelas/${this.id}`
@@ -45,7 +68,7 @@ export default {
         const response = await this.$api.get(url)
         const { data } = response
         this.item = {
-          nama: data.nama
+          nama: data.nama.split(' ')[1]
         }
       } catch (err) {
         console.log(err)
@@ -56,7 +79,12 @@ export default {
       }
     },
   	async save () {
-      const payload = { ...this.item }
+      const form_valid = this.$refs.form.validate()
+      if (!form_valid) {
+        alert('data tidak valid')
+        return
+      }
+      const payload = { nama: 'VII ' + this.item.nama }
       const url = `/kelas/${this.id}`
   		try {
   			this.$q.loading.show({ delay: 500 })

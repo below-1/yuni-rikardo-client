@@ -7,9 +7,9 @@
             <h6 class="q-ma-none q-pa-none">Form Edit Data Guru</h6>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="save">
-              <q-input label="Nama Guru" v-model="item.nama" filled class="q-mb-md" :rules="rules.nama" />
+            <q-form ref="form" @submit="save">
               <q-input label="NIP" v-model="item.nip" filled class="q-mb-md" :rules="rules.nip" />
+              <q-input label="Nama Guru" v-model="item.nama" filled class="q-mb-md" :rules="rules.nama" />
               <div class="q-mb-md">
                 <label>Jenis Kelamin</label>
                 <div class="q-gutter-sm">
@@ -68,6 +68,11 @@ export default {
       }
     },
   	async save () {
+      const form_valid = this.$refs.form.validate()
+      if (!form_valid) {
+        alert('data tidak valid')
+        return
+      }
       const payload = { ...this.item }
       const url = `/guru/${this.id}`
   		try {

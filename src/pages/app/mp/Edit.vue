@@ -7,9 +7,9 @@
             <h6 class="q-ma-none q-pa-none">Form Edit Mata Pelajaran</h6>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="save">
+            <q-form ref="form" @submit="save">
               <q-input label="Nama" v-model="item.nama" filled class="q-mb-md" :rules="rules.nama" />
-              <q-input label="Total Jam" type="number" min=1 v-model.number="item.jpm" filled class="q-mb-md" :rules="rules.jpm" />
+              <q-input label="Total Jam" type="number" min=2 max=6 v-model.number="item.jpm" filled class="q-mb-md" :rules="rules.jpm" />
               <div>
                 <q-btn label="simpan" type="submit" color="blue" depressed class="q-mr-md"></q-btn>
                 <q-btn label="reset" type="reset" depressed></q-btn>
@@ -39,7 +39,8 @@ export default {
         (n => !!n || 'Nama harus diisi')
       ],
       jpm: [
-        (n => !!n || 'Jam Per Minggu harus diisi')
+        (n => !!n || 'Jam Per Minggu harus diisi'),
+        (n => (n >= 2 || n <= 6) || 'Jam tidak valid')
       ]
     }
   }),
@@ -62,6 +63,11 @@ export default {
       }
     },
   	async save () {
+      const form_valid = this.$refs.form.validate()
+      if (!form_valid) {
+        alert('data tidak valid')
+        return
+      }
       const payload = { ...this.item }
       const url = `/mp/${this.id}`
   		try {

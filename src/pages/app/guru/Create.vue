@@ -7,9 +7,12 @@
             <h6 class="q-ma-none q-pa-none">Form Tambah Data Guru</h6>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="save">
+            <q-form ref="form" @submit="save">
+              <q-input label="NIP"
+                v-model="nip" 
+                filled class="q-mb-md" 
+                :rules="rules.nip" />
               <q-input label="Nama Guru" v-model="nama" filled class="q-mb-md" :rules="rules.nama" />
-              <q-input label="NIP" v-model="nip" filled class="q-mb-md" :rules="rules.nip" />
               <div class="q-mb-md">
                 <label>Jenis Kelamin</label>
                 <div class="q-gutter-sm">
@@ -18,7 +21,12 @@
                 </div>
               </div>
               <div>
-                <q-btn label="simpan" type="submit" color="blue" depressed class="q-mr-md"></q-btn>
+                <q-btn 
+                  label="simpan" 
+                  type="submit" 
+                  color="blue" 
+                  depressed 
+                  class="q-mr-md"></q-btn>
                 <q-btn label="reset" type="reset" depressed></q-btn>
               </div>
             </q-form>
@@ -39,7 +47,7 @@ export default {
   data: () => ({
     nama: '',
     sex: 'Laki',
-    nip: '12019201909201920912',
+    nip: '',
   	items: [],
   	errors: null,
     rules: {
@@ -60,6 +68,11 @@ export default {
   },
   methods: {
   	async save () {
+      const form_valid = this.$refs.form.validate()
+      if (!form_valid) {
+        alert('data tidak valid')
+        return
+      }
       const payload = {
         nama: this.nama,
         nip: this.nip,

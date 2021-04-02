@@ -258,6 +258,9 @@ export default {
               return same_day && in_hours && it.kelas == kelas.id
             })
             if (!slot) {
+              console.log(kelas)
+              console.log(bh)
+              console.log(x)
               throw new Error('invalid')
             }
             let sl_id_guru = slot.guru

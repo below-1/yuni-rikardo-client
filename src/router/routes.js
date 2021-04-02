@@ -1,6 +1,10 @@
 
 const routes = [
   {
+    path: '/',
+    component: () => import('layouts/Landing.vue')
+  },
+  {
     path: '/auth/login',
     component: () => import('layouts/Login.vue')
   },

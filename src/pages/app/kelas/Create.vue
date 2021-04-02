@@ -7,8 +7,21 @@
             <h6 class="q-ma-none q-pa-none">Form Tambah Kelas</h6>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="save">
-              <q-input label="Nama" v-model="nama" filled class="q-mb-md" :rules="rules.nama" />
+            <q-form ref="form" @submit="save">
+              <div class="row q-mb-md">
+                <div class="bg-grey-4 q-px-sm flex items-center col-2">
+                  VII
+                </div>
+                <q-select
+                  v-model="nama"
+                  :options="options_kelas"
+                  filled
+                  dense
+                  :rules="rules.nama"
+                  style="padding-bottom: 0px;"
+                  class="col-10"
+                />
+              </div>
               <div>
                 <q-btn label="simpan" type="submit" color="blue" depressed class="q-mr-md"></q-btn>
                 <q-btn label="reset" type="reset" depressed></q-btn>
@@ -30,22 +43,35 @@ export default {
   name: 'CreateKelas',
   data: () => ({
     nama: '',
+    n_kelas: 13,
   	errors: null,
     rules: {
       nama: [
-        (n => !!n || 'Nama harus diisi')
+        (n => !!n || 'Nama kelas harus diisi')
       ]
     }
   }),
   computed: {
     ...mapState({
       user: state => state.user
-    })
+    }),
+    options_kelas () {
+      let xs = []
+      for (let i = 0; i < this.n_kelas; i++) {
+        xs.push(65 + i);
+      }
+      return xs.map(x => String.fromCharCode(x))
+    }
   },
   methods: {
   	async save () {
+      const form_valid = this.$refs.form.validate()
+      if (!form_valid) {
+        alert('data tidak valid')
+        return
+      }
       const payload = {
-        nama: this.nama
+        nama: 'VII ' + this.nama
       } 
       const params = {
         id_app_user: this.user.id
