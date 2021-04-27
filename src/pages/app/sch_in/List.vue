@@ -181,6 +181,8 @@ export default {
           color: 'red-6',
           message: 'gagal menjalankan penjadwalan'
         })
+      } finally {
+        this.scheduleDialog = false
       }
     }
   },

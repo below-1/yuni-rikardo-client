@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: '/schedule/:task_id',
-    component: () => import('layouts/Schedule.vue'),
+    component: () => import('layouts/ScheduleView.vue'),
     props: true
   },
   {

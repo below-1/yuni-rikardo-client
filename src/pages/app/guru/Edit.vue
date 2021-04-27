@@ -48,7 +48,7 @@ export default {
       ],
       nip: [
         (n => !!n || 'NIP harus diisi'),
-        (n => n.length == 20 || 'NIP harus 20 karakter'),
+        (n => n.length == 18 || 'NIP harus 18 karakter'),
         (n => n.match(nip_pattern) || 'NIP berupa digit')
       ]
     }

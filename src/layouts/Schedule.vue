@@ -258,6 +258,12 @@ export default {
               return same_day && in_hours && it.kelas == kelas.id
             })
             if (!slot) {
+              console.log(
+                res.filter(it => {
+                  const same_day = it.hari == bh.hari
+                  return same_day && it.kelas == kelas.id
+                })
+              )
               console.log(kelas)
               console.log(bh)
               console.log(x)
